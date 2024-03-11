@@ -1,18 +1,24 @@
 const { Model, DataTypes } = require('sequelize');
-const connection = require('../DataBase/connection');
+const connection = require('../dataBase/connection');
 
 class vehicle extends Model { }
 vehicle.init({
     vehicleId: {
         type: DataTypes.INTEGER,
         primaryKey: true,
+        unique: true,
         autoIncrement: true
     },
     vehiclePlate: {
         type: DataTypes.STRING,
+        unique: true,
         allowNull: false
     },
     vehicleBrand: {
+        type: DataTypes.STRING,
+        allowNull: false
+    },
+    vehicleLine: {
         type: DataTypes.STRING,
         allowNull: false
     },
@@ -24,7 +30,31 @@ vehicle.init({
         type: DataTypes.INTEGER,
         allowNull: false
     },
+    vehicleTrasmision:{
+        type: DataTypes.STRING,
+        allowNull: false
+    },
+    vehicleCC: {
+        type: DataTypes.STRING,
+        allowNull: false
+    },
     vehicleColor: {
+        type: DataTypes.STRING,
+        allowNull: false
+    },
+    vehicleSoat: {
+        type: DataTypes.BOOLEAN,
+        allowNull: false
+    },
+    vehicleTecno: {
+        type: DataTypes.BOOLEAN,
+        allowNull: false
+    },
+    vehicleState: {
+        type: DataTypes.STRING,
+        allowNull: false
+    },
+    vehicleUbication: {  //ciudades que haga cortes
         type: DataTypes.STRING,
         allowNull: false
     },
@@ -40,7 +70,11 @@ vehicle.init({
         type: DataTypes.INTEGER,
         allowNull: false
     },
-    created_at: {
+    buyDate: {
+        type: DataTypes.DATE,
+        allowNull: false
+    },
+    sellDate: {
         type: DataTypes.DATE,
         allowNull: false
     }
