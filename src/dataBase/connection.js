@@ -1,7 +1,7 @@
 const { Sequelize } = require('sequelize');
-var dataBase = 'legalAutosbd';
+var dataBase = 'legalAutosBD';
 var userName = 'postgres';
-var password = '123456789';
+var password = 'contrasenaDeCadaQuien';
 const connection = new Sequelize(dataBase, userName, password, {
     host: 'localhost',
     dialect: 'postgres'
