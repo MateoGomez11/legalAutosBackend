@@ -13,3 +13,15 @@ const city = require('../Models/city');
 //JSON
 const departamentjson = require('./jsonfiles/departmentjson');
 const cityjson = require('./jsonfiles/cityjson');
+
+async function sync(){
+    //Llave foranea vehiculo persona.
+    person.hasMany(vehicle,{
+        foreingKey: 'vehicleId',
+        onDelete: 'restrict',
+        onUpdate:'cascade'
+    });
+    vehicle.belongsTo(person,{
+        foreingKey: 'personId'
+    });
+}
