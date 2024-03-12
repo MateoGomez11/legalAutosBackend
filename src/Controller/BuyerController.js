@@ -20,4 +20,3 @@ async function createBuyer(req, res) {
         console.log(e);
     }
 }
-

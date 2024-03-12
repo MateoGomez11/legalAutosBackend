@@ -1,9 +1,10 @@
 const express = require('express');
-const connection = require('./DataBase/connection');
+const connection = require('./dataBase/connection');
+const inventoryRouter = require('./Router/InventoryRouter.js');
+
 const app = express();
 const port = process.env.PORT || 1338;
 app.use(express.json());
-
 app.use(express.urlencoded({ extended: false }));
 // routers 
 
@@ -16,4 +17,6 @@ connection.sync()
     })
     .catch((error) => {
         console.error('Error al sincronizar la base de datos:', error);
-    }); 
+    });
+
+app.use('/api', inventoryRouter);
