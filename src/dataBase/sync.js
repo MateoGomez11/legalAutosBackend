@@ -13,6 +13,17 @@ const departamentjson = require('./jsonfiles/departmentjson');
 const cityjson = require('./jsonfiles/cityjson');
 
 async function sync(){
+    //Llave foranea vehiculo persona.
+    person.hasMany(vehicle,{
+        foreingKey: 'vehicleId',
+        onDelete: 'restrict',
+        onUpdate:'cascade'
+    });
+    vehicle.belongsTo(person,{
+        foreingKey: 'personId'
+    });
+
+    // Base de datos
     await connection.sync({force: false})
     .then(() => { 
         console.log('Synchronized DataBase');
