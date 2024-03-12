@@ -1,9 +1,9 @@
 const {Model, DataTypes} = require('sequelize');
 const connection = require ('../dataBase/connection');
 
-class Department extends Model{}
+class department extends Model{}
 
-Department.init({
+department.init({
     departmentId: {
         type: DataTypes.STRING,
         primaryKey:true,
@@ -20,4 +20,4 @@ Department.init({
     deletedAt: 'destroyTime'
 });
 
-module.exports = Department;
+module.exports = department;

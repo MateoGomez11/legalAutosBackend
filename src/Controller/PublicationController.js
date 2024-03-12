@@ -24,3 +24,7 @@ async function createPublication(req, res) {
     }
 }
 
+
+module.exports = {
+    createPublication
+}

@@ -1,14 +1,13 @@
 const { Model, DataTypes } = require('sequelize');
 const connection = require('../dataBase/connection');
 
-class publication extends Model {}
+class publication extends Model { }
 publication.init({
     publicationId: {
-        type: DataTypes.STRING,
+        type: DataTypes.INTEGER,
         primaryKey: true,
         unique: true,
         autoIncrement: true,
-
     },
     seller: {
         type: DataTypes.STRING,
@@ -32,7 +31,7 @@ publication.init({
     modelName: 'publication',
     paranoid: true,
     deletedAt: 'destroyTime'
-    
+
 })
 
 module.exports = publication;
