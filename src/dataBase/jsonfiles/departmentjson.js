@@ -1,4 +1,4 @@
-const department = require('../../Models/department');
+const department = require('../../Model/Department');
 
 function createDepartments(){
     department.bulkCreate(

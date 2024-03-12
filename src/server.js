@@ -19,5 +19,5 @@ app.listen(port, ()=> {
 });
 
 // api
-app.use('/api', buyerrouter);
+app.use('/api', buyerRouter);
 app.use('/api', inventoryRouter);
