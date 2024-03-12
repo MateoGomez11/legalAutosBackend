@@ -1,26 +1,43 @@
 const {Model, DataTypes} = require('sequelize');
 const connection = require('../dataBase/connection');
 
-class Person extends Model{}
+class person extends Model{}
 
 person.init({
     personId: {
         type: DataTypes.STRING,
         primaryKey: true
     },
-    firstName: {
+    personName: {
         type: DataTypes.STRING,
         allowNull: false
     },
-    lastName: {
+    personLastName: {
         type: DataTypes.STRING,
         allowNull: false
     },
-    email: {
+    personAge: {
+        type: DataTypes.INTEGER,
+        allowNull: false
+    },
+    personEmail: {
+        type: DataTypes.STRING,
+        allowNull: false,
+        unique: true
+    },
+    personAddress: {
         type: DataTypes.STRING,
         allowNull: false
     },
-    password: {
+    personPassword: {
+        type: DataTypes.STRING,
+        allowNull: false
+    },
+    cityId: {
+        type: DataTypes.INTEGER,
+        allowNull: false
+    },
+    personType:{
         type: DataTypes.STRING,
         allowNull: false
     }
@@ -28,7 +45,7 @@ person.init({
     sequelize: connection,
     modelName: 'Person',
     paranoid : true,
-    deleteAt: 'destroyTime'
+    deletedAt: 'destroyTime'
 });
 
 module.exports = person;

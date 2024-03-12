@@ -30,7 +30,7 @@ vehicle.init({
         type: DataTypes.INTEGER,
         allowNull: false
     },
-    vehicleTrasmision:{
+    vehicleTrasmision: {
         type: DataTypes.STRING,
         allowNull: false
     },
@@ -54,7 +54,7 @@ vehicle.init({
         type: DataTypes.STRING,
         allowNull: false
     },
-    vehicleUbication: {  //ciudades que haga cortes
+    cityId: {
         type: DataTypes.STRING,
         allowNull: false
     },
@@ -76,6 +76,10 @@ vehicle.init({
     },
     sellDate: {
         type: DataTypes.DATE,
+        allowNull: false
+    },
+    personId: {
+        type: DataTypes.STRING,
         allowNull: false
     }
 }, {
