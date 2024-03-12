@@ -2,6 +2,9 @@ require('./dataBase/sync.js');
 
 const connection = require('./dataBase/connection');
 const express = require('express');
+const connection = require('./dataBase/connection');
+const inventoryRouter = require('./Router/InventoryRouter.js');
+
 const app = express();
 const port = process.env.PORT || 1338;
 
@@ -17,3 +20,4 @@ app.listen(port, ()=> {
 
 // api
 app.use('/api', buyerrouter);
+app.use('/api', inventoryRouter);
