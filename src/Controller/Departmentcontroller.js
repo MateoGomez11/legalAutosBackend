@@ -1,5 +1,5 @@
 require('express');
-const department = require('../Models/Department');
+const department = require('../Model/Department');
 
 async function listDepartments(req, res){
     try{

@@ -1,6 +1,5 @@
 require('./dataBase/sync.js');
 
-const connection = require('./dataBase/connection');
 const express = require('express');
 const connection = require('./dataBase/connection');
 const inventoryRouter = require('./Router/InventoryRouter.js');
