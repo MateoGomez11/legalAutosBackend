@@ -70,4 +70,4 @@ async function listVehicles(req, res) {
 module.exports = {
     createVehicle,
     listVehicles
-}//exportar
+}
