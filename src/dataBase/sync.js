@@ -1,12 +1,10 @@
-const connection = require('.connection');
+const connection = require('./connection');
 //Model
+
 const vehicle = require('../Model/Vehicle');
 const publication = require('../Model/Publication');
 const membership = require('../Model/Membership');
 const person = require('../Model/Person');
-
-const restaurant = require('../Models/restaurant');
-const product = require('../Models/product');
 const department = require('../Models/department');
 const city = require('../Models/city');
 
@@ -15,13 +13,12 @@ const departamentjson = require('./jsonfiles/departmentjson');
 const cityjson = require('./jsonfiles/cityjson');
 
 async function sync(){
-    //Llave foranea vehiculo persona.
-    person.hasMany(vehicle,{
-        foreingKey: 'vehicleId',
-        onDelete: 'restrict',
-        onUpdate:'cascade'
-    });
-    vehicle.belongsTo(person,{
-        foreingKey: 'personId'
-    });
+    await connection.sync({force: false})
+    .then(() => { 
+        console.log('Synchronized DataBase');
+    })
+    .catch((error) => { 
+        console.error('Error syncing DataBase' + error);
+    }); 
 }
+sync();
