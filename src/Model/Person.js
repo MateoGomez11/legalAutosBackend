@@ -1,7 +1,7 @@
-const {Model, DataTypes} = require('sequelize');
+const { Model, DataTypes } = require('sequelize');
 const connection = require('../dataBase/connection');
 
-class person extends Model{}
+class person extends Model { }
 
 person.init({
     personId: {
@@ -37,14 +37,14 @@ person.init({
         type: DataTypes.INTEGER,
         allowNull: false
     },
-    personType:{
+    personType: {
         type: DataTypes.STRING,
         allowNull: false
     }
-},{
+}, {
     sequelize: connection,
     modelName: 'Person',
-    paranoid : true,
+    paranoid: true,
     deletedAt: 'destroyTime'
 });
 

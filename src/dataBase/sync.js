@@ -1,12 +1,11 @@
 const connection = require('./connection');
 //Model
-
 const vehicle = require('../Model/Vehicle');
 const publication = require('../Model/Publication');
 const membership = require('../Model/Membership');
 const person = require('../Model/Person');
 const department = require('../Model/department');
-const city = require('../Model/city');
+const city = require('../Model/City');
 
 //JSON
 const departamentjson = require('./jsonfiles/departmentjson');
