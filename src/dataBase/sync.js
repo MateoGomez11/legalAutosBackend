@@ -4,7 +4,7 @@ const vehicle = require('../Model/Vehicle');
 const publication = require('../Model/Publication');
 const membership = require('../Model/Membership');
 const person = require('../Model/Person');
-const department = require('../Model/department');
+const department = require('../Model/Department');
 const city = require('../Model/City');
 
 //JSON
