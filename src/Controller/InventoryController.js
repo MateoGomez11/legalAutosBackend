@@ -1,6 +1,27 @@
 require('express');
 const vehicle = require('../Model/Vehicle');
 
+//enable vehicle
+async function enableVehicle(req, res){
+    try{
+        await vehicle.restore({
+            where: { vehicleId : req.params.veicleId}
+        }).then(function (data){
+            return res.status(200).json({
+                data: data
+            });
+        }).catch(error => {
+            return res.status(400).json({
+                error: error
+            });
+        })
+    }
+    catch (e){
+        console.log(e);
+    }
+}
+
+//create buyer
 async function createVehicle(req, res) {
     try {
         await vehicle.create({
@@ -130,6 +151,7 @@ async function disableVehicle(req, res) {
 module.exports = {
     createVehicle,
     listVehicles,
+    enableVehicle,
     updateVehicle,
     disableVehicle
 }
