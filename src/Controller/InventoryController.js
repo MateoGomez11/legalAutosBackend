@@ -106,8 +106,7 @@ async function updateVehicle(req, res) {
             vehicleSellPrice: req.body.vehicleSellPrice,
             buyDate: new Date(req.body.buyDate),
             sellDate: new Date(req.body.sellDate),
-            cityId: req.body.cityId,
-            personId: req.body.personId
+            cityId: req.body.cityId
         }, {
             where: {
                 vehicleId: req.params.vehicleId
@@ -148,10 +147,34 @@ async function disableVehicle(req, res) {
     }
 }
 
+async function listVehiclesBySeller(req, res){
+    try {
+        await vehicle.findAll({
+            where: {
+                personId: req.params.personId
+            },
+            attributes: [
+                'vehicleId'
+            ]
+        }).then(function (data) {
+            return res.status(200).json({
+                data: data
+            });
+        }).catch(error => {
+            return res.status(400).json({
+                error: error
+            });
+        });
+    } catch (e) {
+        console.log(e);
+    }
+}
+
 module.exports = {
     createVehicle,
     listVehicles,
     enableVehicle,
     updateVehicle,
-    disableVehicle
+    disableVehicle,
+    listVehiclesBySeller
 }
