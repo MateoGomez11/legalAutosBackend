@@ -165,41 +165,11 @@ async function enableSeller(req, res) {
     }
 }
 
-async function listSellerByVehicle(req, res){
-    try {
-        const vehicleId = req.params.vehicleId;
-
-        // Consulta para encontrar todos los vendedores asociados con el vehículo por su ID
-        const sellers = await person.findAll({
-            where: {
-                vehicleId: vehicleId
-            },
-            attributes: [
-                'personId',
-                'personName',
-                // Agrega otras columnas que desees devolver
-            ]
-        });
-
-        return res.status(200).json({
-            data: sellers
-        });
-    } catch (error) {
-        console.log(error);
-        return res.status(500).json({
-            error: "Internal server error"
-        });
-    }
-}
-
-
-
 module.exports = {
     createSeller,
     listSellers,
     updateSeller,
     changeSellerPassword,
     disableSeller,
-    enableSeller,
-    listSellerByVehicle
+    enableSeller
 }
