@@ -40,14 +40,13 @@ person.init({
     personType: {
         type: DataTypes.STRING,
         allowNull: false
-    }
+    },
+
 }, {
     sequelize: connection,
-    modelName: 'Person',
+    modelName: 'person',
     paranoid: true,
     deletedAt: 'destroyTime'
 });
-
-
 
 module.exports = person;

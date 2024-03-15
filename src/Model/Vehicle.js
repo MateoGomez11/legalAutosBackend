@@ -1,6 +1,5 @@
 const { Model, DataTypes } = require('sequelize');
 const connection = require('../dataBase/connection');
-const person = require('../Model/Person');
 
     class vehicle extends Model { }
     vehicle.init({
@@ -79,27 +78,12 @@ const person = require('../Model/Person');
             type: DataTypes.DATE,
             allowNull: false
         },
-        personId: {
-            type: DataTypes.STRING,
-            allowNull: false,
-            references: {
-                model: 'person',
-                key: 'personId' 
-            }
-        }
+        
     }, {
         sequelize: connection,
         modelName: 'vehicle',
         paranoid: true,
         deletedAt: 'destroyTime'
-    });
-
-    vehicle.belongsTo(person, {
-        foreignKey: 'personId',
-        onDelete: 'CASCADE' 
-    });
-    person.hasMany(vehicle,{
-        foreignKey: 'personId'
     });
     
  

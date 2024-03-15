@@ -147,11 +147,59 @@ async function disableVehicle(req, res) {
         console.log(e);
     }
 }
+async function listVehiclesBySeller(req, res){
+    try {
+        await vehicle.findAll({
+            where: {
+                personId: req.params.personId
+            },
+            attributes: [
+                'vehicleId'
+            ]
+        }).then(function (data) {
+            return res.status(200).json({
+                data: data
+            });
+        }).catch(error => {
+            return res.status(400).json({
+                error: error
+            });
+        });
+    } catch (e) {
+        console.log(e);
+    }
+}
+async function listSellerByVehicle(req, res){
+    try {
+        await vehicle.findAll({
+            where: {
+                vehicleId: req.params.vehicleId
+            },
+            attributes: [
+                'personId',
+            ]
+        }).then(function (data) {
+            return res.status(200).json({
+                data: data
+            });
+        }).catch(error => {
+            return res.status(400).json({
+                error: error
+            });
+        });
+    } catch (e) {
+        console.log(e);
+    }
+}
+
+
 
 module.exports = {
     createVehicle,
     listVehicles,
     enableVehicle,
     updateVehicle,
-    disableVehicle
+    disableVehicle,
+    listVehiclesBySeller,
+    listSellerByVehicle
 }
