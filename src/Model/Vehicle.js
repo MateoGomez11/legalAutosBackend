@@ -102,5 +102,5 @@ const person = require('../Model/Person');
         foreignKey: 'personId'
     });
     
-
+ 
 module.exports = vehicle;
