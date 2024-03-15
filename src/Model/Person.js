@@ -40,6 +40,14 @@ person.init({
     personType: {
         type: DataTypes.STRING,
         allowNull: false
+    },
+    vehicleId: {
+        type: DataTypes.STRING,
+        allowNull: false,
+        references: {
+            model: 'vehicle',
+            key: 'vehicleId' 
+        }
     }
 }, {
     sequelize: connection,
@@ -47,7 +55,5 @@ person.init({
     paranoid: true,
     deletedAt: 'destroyTime'
 });
-
-
 
 module.exports = person;
