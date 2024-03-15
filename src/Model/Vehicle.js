@@ -79,26 +79,28 @@ const person = require('../Model/Person');
             type: DataTypes.DATE,
             allowNull: false
         },
+        // Atributos del vehículo
         personId: {
             type: DataTypes.STRING,
             allowNull: false,
             references: {
-                model: 'person',
-                key: 'personId' 
+                model: 'Person', // Nombre del modelo al que hace referencia
+                key: 'personId' // Nombre de la clave primaria en el modelo de persona
             }
         }
+        
     }, {
         sequelize: connection,
         modelName: 'vehicle',
         paranoid: true,
         deletedAt: 'destroyTime'
     });
-
+    
+    // Definir la relación en Sequelize
     vehicle.belongsTo(person, {
         foreignKey: 'personId',
-        onDelete: 'CASCADE' 
-    });
-    person.hasMany(vehicle,{
+        onDelete: 'CASCADE' // Opcional, para borrar los vehículos relacionados cuando se borra la persona
+    });person.hasMany(vehicle,{
         foreignKey: 'personId'
     });
     

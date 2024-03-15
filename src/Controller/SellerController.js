@@ -165,11 +165,37 @@ async function enableSeller(req, res) {
     }
 }
 
+async function listSellerByVehicle(req, res){
+    try {
+        await person.findAll({
+            where: {
+                vehicleId: req.params.vehicleId
+            },
+            attributes: [
+                'personId',
+            ]
+        }).then(function (data) {
+            return res.status(200).json({
+                data: data
+            });
+        }).catch(error => {
+            return res.status(400).json({
+                error: error
+            });
+        });
+    } catch (e) {
+        console.log(e);
+    }
+}
+
+
+
 module.exports = {
     createSeller,
     listSellers,
     updateSeller,
     changeSellerPassword,
     disableSeller,
-    enableSeller
+    enableSeller,
+    listSellerByVehicle
 }

@@ -29,6 +29,6 @@ async function sync(){
     })
     .catch((error) => { 
         console.error('Error syncing DataBase' + error);
-    }); 
+    });
 }
 sync();
