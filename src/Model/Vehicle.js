@@ -84,10 +84,11 @@ const person = require('../Model/Person');
             type: DataTypes.STRING,
             allowNull: false,
             references: {
-                model: 'person', // Nombre del modelo al que hace referencia
+                model: 'Person', // Nombre del modelo al que hace referencia
                 key: 'personId' // Nombre de la clave primaria en el modelo de persona
             }
         }
+        
     }, {
         sequelize: connection,
         modelName: 'vehicle',
@@ -99,6 +100,8 @@ const person = require('../Model/Person');
     vehicle.belongsTo(person, {
         foreignKey: 'personId',
         onDelete: 'CASCADE' // Opcional, para borrar los vehículos relacionados cuando se borra la persona
+    });person.hasMany(vehicle,{
+        foreignKey: 'personId'
     });
     
 
