@@ -5,7 +5,7 @@ const vehicle = require('../Model/Vehicle');
 async function enableVehicle(req, res){
     try{
         await vehicle.restore({
-            where: { vehicleId : req.params.veicleId}
+            where: { vehicleId : req.params.vehicleId}
         }).then(function (data){
             return res.status(200).json({
                 data: data
