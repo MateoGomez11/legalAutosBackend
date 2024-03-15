@@ -13,6 +13,14 @@ const cityjson = require('./jsonfiles/cityjson');
 
 async function sync(){
     //Llave foranea vehiculo persona.
+    /*person.hasMany(vehicle,{
+        foreignKey: 'personId',
+        onDelete: 'restrict',
+        onUpdate:'cascade'
+    });
+    vehicle.belongsTo(person,{
+        foreignKey: 'personId'
+    });*/
     person.hasMany(vehicle,{
         foreignKey: 'personId',
         onDelete: 'restrict',
@@ -21,6 +29,7 @@ async function sync(){
     vehicle.belongsTo(person,{
         foreignKey: 'personId'
     });
+
 
     // Base de datos
     await connection.sync({force: false})
