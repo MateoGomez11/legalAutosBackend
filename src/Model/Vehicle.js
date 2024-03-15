@@ -1,6 +1,5 @@
 const { Model, DataTypes } = require('sequelize');
 const connection = require('../dataBase/connection');
-const person = require('../Model/Person');
 
     class vehicle extends Model { }
     vehicle.init({
@@ -78,16 +77,7 @@ const person = require('../Model/Person');
         sellDate: {
             type: DataTypes.DATE,
             allowNull: false
-        },/*
-        // Atributos del vehículo
-        personId: {
-            type: DataTypes.STRING,
-            allowNull: false,
-            references: {
-                model: 'Person', // Nombre del modelo al que hace referencia
-                key: 'personId' // Nombre de la clave primaria en el modelo de persona
-            }
-        }*/
+        },
         
     }, {
         sequelize: connection,
@@ -95,14 +85,6 @@ const person = require('../Model/Person');
         paranoid: true,
         deletedAt: 'destroyTime'
     });
-    /*
-    // Definir la relación en Sequelize
-    vehicle.belongsTo(person, {
-        foreignKey: 'personId',
-        onDelete: 'CASCADE' // Opcional, para borrar los vehículos relacionados cuando se borra la persona
-    });person.hasMany(vehicle,{
-        foreignKey: 'personId'
-    });
-    */
+    
 
 module.exports = vehicle;

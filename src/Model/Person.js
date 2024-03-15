@@ -40,15 +40,7 @@ person.init({
     personType: {
         type: DataTypes.STRING,
         allowNull: false
-    },/*
-    vehicleId: {
-        type: DataTypes.INTEGER,
-        allowNull: true,
-        references: {
-            model: 'vehicle', 
-            key: 'vehicleId' 
-        }
-    }*/
+    },
 
 }, {
     sequelize: connection,
