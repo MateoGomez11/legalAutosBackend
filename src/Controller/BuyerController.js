@@ -1,7 +1,7 @@
 require('express');
 const person = require('../Model/Person');
 
-//create buyer
+
 async function createBuyer(req, res) {
     try {
         await person.create({
@@ -13,7 +13,7 @@ async function createBuyer(req, res) {
             personAddress: req.body.personAddress,
             personPassword: req.body.personPassword,
             cityId: req.body.cityId,
-            personType: 'buyer'
+            personType: 'Buyer'
         }).then(function (data) {
             return res.status(200).json({
                 data: data
@@ -33,7 +33,7 @@ async function listBuyers(req, res) {
     try {
         await person.findAll({
             where: {
-                personType: 'buyer' 
+                personType: 'Buyer'
             },
             attributes: [
                 'personId',
@@ -43,9 +43,6 @@ async function listBuyers(req, res) {
                 'personEmail',
                 'personAddress',
                 'cityId'
-            ],
-            order: [
-                ['personName', 'ASC'] 
             ]
         }).then(function (data) {
             return res.status(200).json({
@@ -57,49 +54,62 @@ async function listBuyers(req, res) {
             });
         });
     } catch (e) {
-        console.error(e);
-        res.status(500).send('Error en el servidor');
+        console.log(e);
     }
 }
 
 // corregir desde aqui
 async function updateBuyer(req, res) {
     try {
-        await person.update({
-            buyerName: req.body.buyerName,
-            buyerLastName: req.body.buyerLastName,
-            buyerAge: req.body.buyerAge,
-            buyerEmail: req.body.buyerEmail,
-            buyerAddress: req.body.buyerAddress,
+        const updated = await person.update({
+            personName: req.body.personName,
+            personLastName: req.body.personLastName,
+            personAge: req.body.personAge,
+            personEmail: req.body.personEmail,
+            personAddress: req.body.personAddress,
             cityId: req.body.cityId
         }, {
-            where: { buyerId: req.params.personId }
-        }).then(function (data) {
-            return res.status(200).json({
-                data: data
-            });
-        }).catch(error => {
+            where: {
+                personId: req.params.personId,
+                personPassword: req.params.personPassword,
+                personType: 'Buyer'
+            }
+        });
+
+        if (updated[0] === 0) {
             return res.status(400).json({
-                error: error
+                error: "ID or password incorrect"
             });
-        })
-    }
-    catch (e) {
-        console.log(e);
+        } else {
+            return res.status(200).json({
+                message: 'Updated successfully',
+                data: updated
+            });
+        }
+    } catch (error) {
+        console.log(error);
+        return res.status(500).json({
+            error: "Internal server error"
+        });
     }
 }
+
 
 async function changeBuyerPassword(req, res) {
     try {
         await person.update({
-            buyerPassword: req.body.buyerPassword
+            where: {
+                personType: 'Buyer'
+            },
+            personPassword: req.body.personPassword
         }, {
             where: {
-                buyerId: req.params.personId,
-                buyerPassword: reqparams.buyerPassword
+                personId: req.params.personId,
+                personPassword: req.params.personPassword
             }
         }).then(function (data) {
             return res.status(200).json({
+                message: 'Password changed',
                 data: data
             });
         }).catch(error => {
@@ -117,7 +127,8 @@ async function disableBuyer(req, res) {
     try {
         await person.destroy({
             where: {
-                buyerId: req.params.personId
+                personId: req.params.personId,
+                personType: 'Buyer'
             }
         }).then(function (data) {
             return res.status(200).json({
@@ -138,7 +149,8 @@ async function enableBuyer(req, res) {
     try {
         await person.restore({
             where: {
-                buyerId: req.params.personId
+                personId: req.params.personId,
+                personType: 'Buyer'
             }
         }).then(function (data) {
             return res.status(200).json({

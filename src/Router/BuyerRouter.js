@@ -4,9 +4,9 @@ const router = express.Router();
 
 router.post('/createbuyer', buyerController.createBuyer);
 router.get('/listbuyers', buyerController.listBuyers);
-router.put('/updatebuyer', buyerController.updateBuyer);
-router.put('/changeBuyerPassword', buyerController.changeBuyerPassword);
-router.put('/disableBuyer', buyerController.disableBuyer);
-router.put('/enableBuyer', buyerController.enableBuyer);
+router.put('/updatebuyer/:personId/:personPassword', buyerController.updateBuyer);
+router.put('/changebuyerpassword/:personId/:personPassword', buyerController.changeBuyerPassword);
+router.put('/disablebuyer/:personId', buyerController.disableBuyer);
+router.put('/enablebuyer/:personId', buyerController.enableBuyer);
 
 module.exports = router;
