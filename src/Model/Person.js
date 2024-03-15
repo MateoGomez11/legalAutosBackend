@@ -48,6 +48,4 @@ person.init({
     deletedAt: 'destroyTime'
 });
 
-
-
 module.exports = person;
