@@ -12,15 +12,38 @@ const departamentjson = require('./jsonfiles/departmentjson');
 const cityjson = require('./jsonfiles/cityjson');
 
 async function sync(){
-    //Llave foranea vehiculo persona.
+    //Llave foranea vehicle - person.
     person.hasMany(vehicle,{
         foreingKey: 'vehicleId',
         onDelete: 'restrict',
         onUpdate:'cascade'
+        
     });
     vehicle.belongsTo(person,{
         foreingKey: 'personId'
     });
+
+    //Llave foranea publication - vehicle
+    publication.hasMany(vehicle, {
+        foreignKey: 'vehicleId',
+        onDelete: 'restrict',
+        onUpdate: 'cascade'
+    });
+    vehicle.belongsTo(publication, {
+        foreignKey: 'publicationId'
+    });
+
+    //Llave foranea departament - city
+    department.hasMany(city, {
+        foreignKey: 'departmentId',
+        onDelete: 'restrict',
+        onUpdate: 'cascade'
+        
+    });
+    city.belongsTo(department, {
+        foreignKey: 'departmentId'
+    });
+
 
     // Base de datos
     await connection.sync({force: false})
@@ -30,5 +53,8 @@ async function sync(){
     .catch((error) => { 
         console.error('Error syncing DataBase' + error);
     }); 
+
+    departamentjson.createDepartments();
+    cityjson.createCities();
 }
 sync();
