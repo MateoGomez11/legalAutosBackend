@@ -7,7 +7,8 @@ const app = express();
 const port = process.env.PORT || 1338;
 
 // routers 
-const buyerrouter = require ('./Router/BuyerRouter');
+const buyerRouter = require('./Router/BuyerRouter');
+const publicationRouter = require('./Router/PublicationRouter.js');
 
 app.use(express.json());
 app.use(express.urlencoded({ extended: false}));
@@ -17,5 +18,6 @@ app.listen(port, ()=> {
 });
 
 // api
-app.use('/api', buyerrouter);
+app.use('/api', buyerRouter);
 app.use('/api', inventoryRouter);
+app.use('/api', publicationRouter);
