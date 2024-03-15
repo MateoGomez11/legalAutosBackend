@@ -7,4 +7,7 @@ router.get('/listVehicles', inventoryController.listVehicles);
 router.put('/updateVehicle/:vehicleId', inventoryController.updateVehicle);
 router.put('/disableVehicle/:vehicleId', inventoryController.disableVehicle);
 router.put('/enableVehicle/:vehicleId', inventoryController.enableVehicle);
+router.get('/listvehiclesbyseller/:personId', inventoryController.listVehiclesBySeller);
+router.get('/listsellerbyvehicle/:vehicleId', inventoryController.listSellerByVehicle);
+
 module.exports = router;

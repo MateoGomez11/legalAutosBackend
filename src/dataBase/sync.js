@@ -12,16 +12,18 @@ const departamentjson = require('./jsonfiles/departmentjson');
 const cityjson = require('./jsonfiles/cityjson');
 
 async function sync(){
+
     //Llave foranea vehicle - person.
     person.hasMany(vehicle,{
-        foreingKey: 'vehicleId',
+        foreignKey: 'personId',
         onDelete: 'restrict',
         onUpdate:'cascade'
         
     });
     vehicle.belongsTo(person,{
-        foreingKey: 'personId'
+        foreignKey: 'personId'
     });
+
 
     //Llave foranea publication - vehicle
     publication.hasMany(vehicle, {
@@ -44,7 +46,6 @@ async function sync(){
         foreignKey: 'departmentId'
     });
 
-
     // Base de datos
     await connection.sync({force: false})
     .then(() => { 
@@ -54,6 +55,7 @@ async function sync(){
         console.error('Error syncing DataBase' + error);
     }); 
 
+    //create json
     departamentjson.createDepartments();
     cityjson.createCities();
 }
