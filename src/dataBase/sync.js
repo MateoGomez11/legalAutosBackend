@@ -26,13 +26,13 @@ async function sync(){
 
 
     //Llave foranea publication - vehicle
-    publication.hasMany(vehicle, {
+    vehicle.hasOne(publication, {
         foreignKey: 'vehicleId',
         onDelete: 'restrict',
         onUpdate: 'cascade'
     });
-    vehicle.belongsTo(publication, {
-        foreignKey: 'publicationId'
+    publication.belongsTo(vehicle, {
+        foreignKey: 'vehicleId'
     });
 
     //Llave foranea departament - city
@@ -45,6 +45,17 @@ async function sync(){
     city.belongsTo(department, {
         foreignKey: 'departmentId'
     });
+
+    //Foreign key seller - publication
+    person.hasMany(publication, {
+        foreignKey: 'personId',
+        onDelete: 'cascade',
+        onUpdate: 'cascade'
+    });
+    publication.belongsTo(person, {
+        foreignKey: 'personId'
+    });
+
 
     // Base de datos
     await connection.sync({force: false})

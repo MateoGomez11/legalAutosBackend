@@ -9,10 +9,6 @@ publication.init({
         unique: true,
         autoIncrement: true,
     },
-    seller: {
-        type: DataTypes.STRING,
-        allowNull: false
-    },
     publicationDate: {
         type: DataTypes.DATE,
         allowNull: false
