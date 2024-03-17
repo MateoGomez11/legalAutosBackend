@@ -12,26 +12,24 @@ membership.init({
     },
     membershipState: {
         type: DataTypes.BOOLEAN,
-        allowNull: false
+        allowNull:false
     },
-    membershipDate: {
+    membershipsDate:{
         type: DataTypes.DATE,
-        allowNull: false
+        allowNull:false
     },
     membershipExpiration: {
         type: DataTypes.DATE,
-        allowNull: false
+        allowNull:false
     },
     membershipPrice: {
         type: DataTypes.FLOAT,
-        allowNull: false
+        allowNull:false
     },
-
-}, {
+},{
     sequelize: connection,
-    modelName: 'membership',
+    modeName: 'membership',
     paranoid: true,
     deletedAt: 'destroyTime'
 });
-
 module.exports = membership;

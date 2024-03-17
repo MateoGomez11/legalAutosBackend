@@ -1,5 +1,6 @@
 require('express');
 const vehicle = require('../Model/Vehicle');
+const { Sequelize, Op } = require('sequelize');
 
 //enable vehicle
 async function enableVehicle(req, res){
@@ -193,6 +194,59 @@ async function listSellerByVehicle(req, res){
     }
 }
 
+async function filterVehicles(req, res){
+    try {
+        const { brand, line, type, year, trasmision, CC, color} = req.body;
+        const whereClause = {};
+        if (brand) {
+            whereClause.vehicleBrand = { [Op.iLike]: `%${brand}%` };
+        }
+        if (line) {
+            whereClause.vehicleLine = { [Op.iLike]: `%${line}%` };
+        }
+        if (type) {
+            whereClause.vehicleType = { [Op.iLike]: `%${type}%` };
+        }
+        if (year) {
+            whereClause.vehicleYear = year;
+        }
+        if (trasmision) {
+            whereClause.vehicleTrasmision = trasmision;
+        }
+        if (CC) {
+            whereClause.vehicleCC = CC;
+        }
+        if (color) {
+            whereClause.vehicleColor = color;
+        }
+
+        // Realizar la consulta utilizando las condiciones de búsqueda dinámicas
+        const vehicles = await vehicle.findAll({
+            where: whereClause,
+            attributes: [
+                'vehiclePlate',
+                'vehicleBrand',
+                'vehicleLine',
+                'vehicleYear',
+                'vehicleTrasmision',
+                'vehicleBuyPrice',
+                'vehicleState'
+            ]
+        }).then(function (data) {
+            return res.status(200).json({
+                data: data
+            });
+        }).catch(error => {
+            return res.status(400).json({
+                error: error
+            });
+        });
+    } catch (e) {
+        console.log(e);
+    }
+}
+
+
 
 
 module.exports = {
@@ -202,5 +256,6 @@ module.exports = {
     updateVehicle,
     disableVehicle,
     listVehiclesBySeller,
-    listSellerByVehicle
+    listSellerByVehicle,
+    filterVehicles
 }

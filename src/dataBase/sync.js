@@ -11,16 +11,26 @@ const city = require('../Model/City');
 const departamentjson = require('./jsonfiles/departmentjson');
 const cityjson = require('./jsonfiles/cityjson');
 
-async function sync(){
+async function sync() {
 
-    //Llave foranea vehicle - person.
-    person.hasMany(vehicle,{
+    //Llave foranea person - membership
+    person.hasOne(membership, {
         foreignKey: 'personId',
         onDelete: 'restrict',
-        onUpdate:'cascade'
-        
+        onUpdate: 'cascade'
     });
-    vehicle.belongsTo(person,{
+    membership.belongsTo(person, {
+        foreignKey: 'personId'
+    });
+
+    //Llave foranea vehicle - person.
+    person.hasMany(vehicle, {
+        foreignKey: 'personId',
+        onDelete: 'restrict',
+        onUpdate: 'cascade'
+
+    });
+    vehicle.belongsTo(person, {
         foreignKey: 'personId'
     });
 
@@ -40,7 +50,7 @@ async function sync(){
         foreignKey: 'departmentId',
         onDelete: 'restrict',
         onUpdate: 'cascade'
-        
+
     });
     city.belongsTo(department, {
         foreignKey: 'departmentId'
@@ -58,13 +68,13 @@ async function sync(){
 
 
     // Base de datos
-    await connection.sync({force: false})
-    .then(() => { 
-        console.log('Synchronized DataBase');
-    })
-    .catch((error) => { 
-        console.error('Error syncing DataBase' + error);
-    }); 
+    await connection.sync({ force: false })
+        .then(() => {
+            console.log('Synchronized DataBase');
+        })
+        .catch((error) => {
+            console.error('Error syncing DataBase' + error);
+        });
 
     //create json
     departamentjson.createDepartments();
