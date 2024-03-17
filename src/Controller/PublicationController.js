@@ -38,6 +38,8 @@ async function createPublication(req, res) {
                     message: 'Solo se permiten 3 publicaciones sin membresía.'
                 });
             }
+            const publicationPrice = 10000;
+            
         }//validacion de 3 publicaciones por vendedor y membresia
 
         const existingPublication = await publication.findOne({
