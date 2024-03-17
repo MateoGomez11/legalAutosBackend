@@ -41,17 +41,10 @@ person.init({
         type: DataTypes.STRING,
         allowNull: false
     },
-    vehicleId: {
-        type: DataTypes.STRING,
-        allowNull: false,
-        references: {
-            model: 'vehicle',
-            key: 'vehicleId' 
-        }
-    }
+
 }, {
     sequelize: connection,
-    modelName: 'Person',
+    modelName: 'person',
     paranoid: true,
     deletedAt: 'destroyTime'
 });

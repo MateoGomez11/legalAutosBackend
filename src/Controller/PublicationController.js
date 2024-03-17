@@ -1,6 +1,5 @@
 require('express');
 const publication = require('../Model/Publication');
-const vehicle = require('../Model/Vehicle');
 
 async function createPublication(req, res) {
     try {
