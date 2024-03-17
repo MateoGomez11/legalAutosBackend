@@ -1,24 +1,47 @@
 require('express');
 const publication = require('../Model/Publication');
 const Vehicle = require('../Model/Vehicle');
+const membership = require('../Model/Membership');
+const {sequelize, Op} = require('sequelize');
+
 
 
 async function createPublication(req, res) {
     try {
         const findVehicle = await Vehicle.findOne({
-            where: { 
+            where: {
                 vehicleId: req.body.vehicleId,
                 vehicleState: 'avaliable'
             }
         });
-        if(!findVehicle) {
+        if (!findVehicle) {
             return res.status(400).json({
                 message: 'Vehicle is not available for publication'
             });
-        }
+        }//el carro no esta disponible
+
+        const countPublication = await publication.count({
+            where: {
+                personId: req.body.personId
+            }
+        });
+        if (countPublication >= 3) {
+            const hasMembership = await membership.findOne({
+                where: {
+                    personId: req.body.personId,
+                    membershipState: true,
+                    membershipExpiration: { [Op.gt]: new Date() }
+                }
+            });
+            if (!hasMembership) {
+                return res.status(400).json({
+                    message: 'Solo se permiten 3 publicaciones sin membresía.'
+                });
+            }
+        }//validacion de 3 publicaciones por vendedor y membresia
 
         const existingPublication = await publication.findOne({
-            where: { 
+            where: {
                 vehicleId: req.body.vehicleId
             }
         });
@@ -26,10 +49,10 @@ async function createPublication(req, res) {
             return res.status(400).json({
                 message: 'El vehículo ya tiene una publicación asociada.'
             });
-        }
+        }//la publicacion ya existe
 
         await publication.create({
-            personId : req.body.personId,
+            personId: req.body.personId,
             vehicleId: req.body.vehicleId,
             publicationDate: req.body.publicationDate,
             state: req.body.state,
@@ -43,7 +66,7 @@ async function createPublication(req, res) {
             return res.status(400).json({
                 error: error
             });
-        })    
+        })
     } catch (e) {
         console.log(e);
     }
@@ -69,7 +92,7 @@ async function listPublication(req, res) {
                 error: error
             });
         })
-             
+
     } catch (e) {
         console.log(e);
     }
@@ -80,9 +103,9 @@ async function updatePublication(req, res) {
         await publication.update({
             state: req.body.state,
             price: req.body.price
-            
+
         }, {
-            where: {publicationId: req.params.publicationId}
+            where: { publicationId: req.params.publicationId }
         }).then(function (data) {
             return res.status(200).json({
                 data: data
@@ -100,7 +123,7 @@ async function updatePublication(req, res) {
 async function disablePublication(req, res) {
     try {
         await publication.destroy({
-           where: {publicationId: req.params.publicationId}
+            where: { publicationId: req.params.publicationId }
         }).then(function (data) {
             return res.status(200).json({
                 data: data
@@ -118,7 +141,7 @@ async function disablePublication(req, res) {
 async function enablePublication(req, res) {
     try {
         await publication.restore({
-            where: {publicationId: req.params.publicationId}
+            where: { publicationId: req.params.publicationId }
         }).then(function (data) {
             return res.status(200).json({
                 data: data
