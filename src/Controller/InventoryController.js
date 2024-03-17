@@ -68,6 +68,7 @@ async function listVehicles(req, res) {
                 'vehicleYear',
                 'vehicleTrasmision',
                 'vehicleBuyPrice',
+                'vehicleState'
             ],
             order: ['vehiclePlate'],
 
