@@ -11,16 +11,26 @@ const city = require('../Model/City');
 const departamentjson = require('./jsonfiles/departmentjson');
 const cityjson = require('./jsonfiles/cityjson');
 
-async function sync(){
+async function sync() {
+
+    //Llave foranea person - membership
+    person.hasOne(membership, {
+        foreignKey: 'personId',
+        onDelete: 'restrict',
+        onUpdate: 'cascade'
+    });
+    membership.belongsTo(person, {
+        foreignKey: 'personId'
+    });
 
     //Foreign key vehicle - person.
     person.hasMany(vehicle,{
         foreignKey: 'personId',
         onDelete: 'restrict',
-        onUpdate:'cascade'
-        
+        onUpdate: 'cascade'
+
     });
-    vehicle.belongsTo(person,{
+    vehicle.belongsTo(person, {
         foreignKey: 'personId'
     });
 
@@ -40,7 +50,7 @@ async function sync(){
         foreignKey: 'departmentId',
         onDelete: 'restrict',
         onUpdate: 'cascade'
-        
+
     });
     city.belongsTo(department, {
         foreignKey: 'departmentId'
