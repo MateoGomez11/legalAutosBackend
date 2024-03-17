@@ -13,7 +13,7 @@ const cityjson = require('./jsonfiles/cityjson');
 
 async function sync(){
 
-    //Llave foranea vehicle - person.
+    //Foreign key vehicle - person.
     person.hasMany(vehicle,{
         foreignKey: 'personId',
         onDelete: 'restrict',
@@ -25,7 +25,7 @@ async function sync(){
     });
 
 
-    //Llave foranea publication - vehicle
+    //Foreign key publication - vehicle
     vehicle.hasOne(publication, {
         foreignKey: 'vehicleId',
         onDelete: 'restrict',
@@ -35,7 +35,7 @@ async function sync(){
         foreignKey: 'vehicleId'
     });
 
-    //Llave foranea departament - city
+    //Foreign key department - city
     department.hasMany(city, {
         foreignKey: 'departmentId',
         onDelete: 'restrict',
@@ -57,7 +57,7 @@ async function sync(){
     });
 
 
-    // Base de datos
+    // Data Base
     await connection.sync({force: false})
     .then(() => { 
         console.log('Synchronized DataBase');
