@@ -7,6 +7,4 @@ const connection = new Sequelize(dataBase, userName, password, {
     dialect: 'postgres'
 });
 
-
-
 module.exports = connection;
