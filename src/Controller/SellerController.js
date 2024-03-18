@@ -13,7 +13,8 @@ async function createSeller(req, res) {
             personAddress: req.body.personAddress,
             personPassword: req.body.personPassword,
             cityId: req.body.cityId,
-            personType: 'Seller'
+            wallet: req.body.wallet,
+            personType: 'Seller'    
         }).then(function (data) {
             return res.status(200).json({
                 data: data
@@ -42,7 +43,8 @@ async function listSellers(req, res) {
                 'personAge',
                 'personEmail',
                 'personAddress',
-                'cityId'
+                'cityId',
+                'wallet'
             ]
         }).then(function (data) {
             return res.status(200).json({
@@ -67,7 +69,9 @@ async function updateSeller(req, res) {
             personAge: req.body.personAge,
             personEmail: req.body.personEmail,
             personAddress: req.body.personAddress,
-            cityId: req.body.cityId
+            cityId: req.body.cityId,
+            wallet: req.body.wallet
+            
         }, {
             where: {
                 personId: req.params.personId,
