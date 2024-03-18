@@ -1,7 +1,7 @@
-const { Model, DataTypes } = require('sequelize');
-const connection = require('../dataBase/connection');
+    const { Model, DataTypes } = require('sequelize');
+    const connection = require('../dataBase/connection');
 
-class person extends Model { }
+    class person extends Model { }
 
 person.init({
     personId: {
@@ -47,11 +47,11 @@ person.init({
     }
 
 
-}, {
-    sequelize: connection,
-    modelName: 'person',
-    paranoid: true,
-    deletedAt: 'destroyTime'
-});
+    }, {
+        sequelize: connection,
+        modelName: 'person',
+        paranoid: true,
+        deletedAt: 'destroyTime'
+    });
 
 module.exports = person;
