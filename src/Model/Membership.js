@@ -14,7 +14,7 @@ membership.init({
         type: DataTypes.BOOLEAN,
         allowNull:false
     },
-    membershipsDate:{
+    membershipDate:{
         type: DataTypes.DATE,
         allowNull:false
     },

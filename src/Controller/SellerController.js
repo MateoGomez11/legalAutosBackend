@@ -13,6 +13,7 @@ async function createSeller(req, res) {
             personAddress: req.body.personAddress,
             personPassword: req.body.personPassword,
             cityId: req.body.cityId,
+            wallet: 0,
             personType: 'Seller'
         }).then(function (data) {
             return res.status(200).json({
@@ -42,7 +43,8 @@ async function listSellers(req, res) {
                 'personAge',
                 'personEmail',
                 'personAddress',
-                'cityId'
+                'cityId',
+                'wallet'
             ]
         }).then(function (data) {
             return res.status(200).json({
@@ -165,6 +167,45 @@ async function enableSeller(req, res) {
     }
 }
 
+async function addFundsSeller(req, res) {
+    try {
+        const seller = await person.findOne({
+            where: {
+                personId: req.params.personId,
+                personPassword: req.params.personPassword,
+                personType: 'Seller'
+            }
+        });
+
+        if (!seller) {
+            return res.status(400).json({
+                error: "Seller not found"
+            });
+        }
+
+        const currentWallet = seller.wallet;
+        const fundsToAdd = parseFloat(req.body.wallet);
+        const newWalletAmount = currentWallet + fundsToAdd;
+
+        await seller.update({
+            wallet: newWalletAmount
+        }).then(function (data) {
+            return res.status(200).json({
+                wallet: newWalletAmount,
+                message: 'Updated successfully'
+            });
+        }).catch(error => {
+            return res.status(400).json({
+                error: error
+            });
+        })
+    }
+    catch (e) {
+        console.log(e);
+    }
+}
+
+
 
 
 
@@ -175,5 +216,6 @@ module.exports = {
     updateSeller,
     changeSellerPassword,
     disableSeller,
-    enableSeller
+    enableSeller,
+    addFundsSeller
 }

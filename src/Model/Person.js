@@ -41,6 +41,11 @@ person.init({
         type: DataTypes.STRING,
         allowNull: false
     },
+    wallet: {
+        type: DataTypes.INTEGER,
+        allowNull: false
+    }
+
 
 }, {
     sequelize: connection,
