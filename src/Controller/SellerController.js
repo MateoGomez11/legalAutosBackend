@@ -13,13 +13,8 @@ async function createSeller(req, res) {
             personAddress: req.body.personAddress,
             personPassword: req.body.personPassword,
             cityId: req.body.cityId,
-<<<<<<< HEAD
-            wallet: 0,
-            personType: 'Seller'
-=======
             wallet: req.body.wallet,
             personType: 'Seller'    
->>>>>>> cee275aff3acbcefbb5ab5146aa9d9aca48e622b
         }).then(function (data) {
             return res.status(200).json({
                 data: data
@@ -173,7 +168,6 @@ async function enableSeller(req, res) {
         console.log(e);
     }
 }
-
 async function addFundsSeller(req, res) {
     try {
         const seller = await person.findOne({
@@ -211,10 +205,6 @@ async function addFundsSeller(req, res) {
         console.log(e);
     }
 }
-
-
-
-
 
 
 module.exports = {
