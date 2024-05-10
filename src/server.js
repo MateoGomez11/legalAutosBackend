@@ -11,6 +11,8 @@ const sellerRouter = require ('./Router/SellerRouter');
 const publicationRouter = require('./Router/PublicationRouter.js');
 const inventoryRouter = require('./Router/InventoryRouter.js');
 const membershipRouter = require('./Router/MembershipRouter.js');
+const cityRouter = require('./Router/cityRouter.js');
+const departmentRouter = require('./Router/departmentRouter.js');
 
 app.use(express.json());
 app.use(express.urlencoded({ extended: false}));
@@ -29,3 +31,5 @@ app.use('/api', sellerRouter);
 app.use('/api', inventoryRouter);
 app.use('/api', publicationRouter);
 app.use('/api', membershipRouter);
+app.use('/api', cityRouter);
+app.use('/api', departmentRouter);
