@@ -3,11 +3,11 @@ const vehicle = require('../Model/Vehicle');
 const { Sequelize, Op } = require('sequelize');
 
 //enable vehicle
-async function enableVehicle(req, res){
-    try{
+async function enableVehicle(req, res) {
+    try {
         await vehicle.restore({
-            where: { vehicleId : req.params.vehicleId}
-        }).then(function (data){
+            where: { vehicleId: req.params.vehicleId }
+        }).then(function (data) {
             return res.status(200).json({
                 data: data
             });
@@ -17,7 +17,7 @@ async function enableVehicle(req, res){
             });
         })
     }
-    catch (e){
+    catch (e) {
         console.log(e);
     }
 }
@@ -69,7 +69,18 @@ async function listVehicles(req, res) {
                 'vehicleYear',
                 'vehicleTrasmision',
                 'vehicleBuyPrice',
-                'vehicleState'
+                'vehicleState',
+                'cityId',
+                'personId',
+                [Sequelize.literal(`to_char("buyDate", 'YYYY-MM-DD')`), 'buyDate'],
+                [Sequelize.literal(`to_char("sellDate", 'YYYY-MM-DD')`), 'sellDate'],
+                'vehicleCC',
+                'vehicleColor',
+                'vehicleSoat',
+                'vehicleTecno',
+                'vehicleDescription',
+                'vehicleType',
+
             ],
             order: ['vehiclePlate'],
 
@@ -149,7 +160,7 @@ async function disableVehicle(req, res) {
         console.log(e);
     }
 }
-async function listVehiclesBySeller(req, res){
+async function listVehiclesBySeller(req, res) {
     try {
         await vehicle.findAll({
             where: {
@@ -171,7 +182,7 @@ async function listVehiclesBySeller(req, res){
         console.log(e);
     }
 }
-async function listSellerByVehicle(req, res){
+async function listSellerByVehicle(req, res) {
     try {
         await vehicle.findAll({
             where: {
@@ -194,9 +205,9 @@ async function listSellerByVehicle(req, res){
     }
 }
 
-async function filterVehicles(req, res){
+async function filterVehicles(req, res) {
     try {
-        const { brand, line, type, year, trasmision, CC, color} = req.body;
+        const { brand, line, type, year, trasmision, CC, color } = req.body;
         const whereClause = {};
         if (brand) {
             whereClause.vehicleBrand = { [Op.iLike]: `%${brand}%` };
@@ -230,7 +241,10 @@ async function filterVehicles(req, res){
                 'vehicleYear',
                 'vehicleTrasmision',
                 'vehicleBuyPrice',
-                'vehicleState'
+                'vehicleState',
+                //--------------
+
+
             ]
         }).then(function (data) {
             return res.status(200).json({
