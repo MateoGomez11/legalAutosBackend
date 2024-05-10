@@ -1,9 +1,9 @@
 require('./dataBase/sync.js');
-const connection = require('./dataBase/connection');
-const express = require('express');
 
+const express = require('express');
 const app = express();
 const port = process.env.PORT || 1338;
+const cors = require('cors');
 
 // routers 
 const buyerRouter = require ('./Router/BuyerRouter');
@@ -15,6 +15,10 @@ const membershipRouter = require('./Router/MembershipRouter.js');
 app.use(express.json());
 app.use(express.urlencoded({ extended: false}));
 
+app.use(cors({
+    origin: 'http://localhost:3000'
+  }));
+  
 app.listen(port, ()=> {
     console.log("The application is running on port: " + port);
 });
