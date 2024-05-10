@@ -13,6 +13,7 @@ async function createBuyer(req, res) {
             personAddress: req.body.personAddress,
             personPassword: req.body.personPassword,
             cityId: req.body.cityId,
+            wallet: 0,
             personType: 'Buyer'
         }).then(function (data) {
             return res.status(200).json({
@@ -42,7 +43,8 @@ async function listBuyers(req, res) {
                 'personAge',
                 'personEmail',
                 'personAddress',
-                'cityId'
+                'cityId',
+                'wallet'
             ]
         }).then(function (data) {
             return res.status(200).json({
@@ -167,6 +169,44 @@ async function enableBuyer(req, res) {
     }
 }
 
+async function addFundsBuyer(req, res) {
+    try {
+        const buyer = await person.findOne({
+            where: {
+                personId: req.params.personId,
+                personPassword: req.params.personPassword,
+                personType: 'Buyer'
+            }
+        });
+
+        if (!buyer) {
+            return res.status(400).json({
+                error: "Buyer not found"
+            });
+        }
+
+        const currentWallet = buyer.wallet;
+        const fundsToAdd = parseFloat(req.body.wallet);
+        const newWalletAmount = currentWallet + fundsToAdd;
+
+        await buyer.update({
+            wallet: newWalletAmount
+        }).then(function (data) {
+            return res.status(200).json({
+                wallet: newWalletAmount,
+                message: 'Updated successfully'
+            });
+        }).catch(error => {
+            return res.status(400).json({
+                error: error
+            });
+        })
+    }
+    catch (e) {
+        console.log(e);
+    }
+}
+
 
 module.exports = {
     createBuyer,
@@ -174,5 +214,6 @@ module.exports = {
     updateBuyer,
     changeBuyerPassword,
     disableBuyer,
-    enableBuyer
+    enableBuyer,
+    addFundsBuyer
 }
