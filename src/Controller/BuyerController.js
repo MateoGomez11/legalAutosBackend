@@ -60,6 +60,32 @@ async function listBuyers(req, res) {
     }
 }
 
+async function getBuyer(req, res) {
+    try {
+        await person.findOne({
+            where: {personId: req.params.personId},
+            attributes: [
+                'personName',
+                'personLastName',
+                'personAge',
+                'personEmail',
+                'personAddress',
+                'cityId',
+                'wallet'
+            ]
+        }).then(function (data) {
+            return res.status(200).json({
+                data: data
+            });
+        }).catch(error => {
+            return res.status(400).json({
+                error: error
+            });
+        });
+    } catch (e) {
+        console.log(e);
+    }
+}
 // corregir desde aqui
 async function updateBuyer(req, res) {
     try {
@@ -69,11 +95,12 @@ async function updateBuyer(req, res) {
             personAge: req.body.personAge,
             personEmail: req.body.personEmail,
             personAddress: req.body.personAddress,
-            cityId: req.body.cityId
+            cityId: req.body.cityId,
+            personPassword: req.body.personPassword
         }, {
             where: {
                 personId: req.params.personId,
-                personPassword: req.params.personPassword,
+                 
                 personType: 'Buyer'
             }
         });
@@ -95,6 +122,7 @@ async function updateBuyer(req, res) {
         });
     }
 }
+
 
 
 async function changeBuyerPassword(req, res) {
@@ -215,5 +243,6 @@ module.exports = {
     changeBuyerPassword,
     disableBuyer,
     enableBuyer,
-    addFundsBuyer
+    addFundsBuyer,
+    getBuyer
 }
