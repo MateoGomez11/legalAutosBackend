@@ -86,4 +86,5 @@ const connection = require('../dataBase/connection');
         deletedAt: 'destroyTime'
     });
     
+    
 module.exports = vehicle;
