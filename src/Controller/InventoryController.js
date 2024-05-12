@@ -63,6 +63,7 @@ async function listVehicles(req, res) {
     try {
         await vehicle.findAll({
             attributes: [
+                'vehicleId',
                 'vehiclePlate', //
                 'vehicleBrand',
                 'vehicleLine',
