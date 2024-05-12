@@ -68,7 +68,7 @@ const connection = require('../dataBase/connection');
         },
         vehicleSellPrice: {
             type: DataTypes.INTEGER,
-            allowNull: false
+            allowNull: true
         },
         buyDate: {
             type: DataTypes.DATE,
@@ -76,7 +76,7 @@ const connection = require('../dataBase/connection');
         },
         sellDate: {
             type: DataTypes.DATE,
-            allowNull: false
+            allowNull: true
         },
         
     }, {
