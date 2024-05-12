@@ -5,6 +5,7 @@ const router = express.Router();
 router.post('/createPublication', publicationController.createPublication);
 router.get('/listPublications', publicationController.listPublication);
 router.put('/updatePublication/:publicationId', publicationController.updatePublication);
-router.get('/disablePublication/:publicationId', publicationController.disablePublication);
+router.put('/disablePublication/:publicationId', publicationController.disablePublication);
 router.put('/enablePublication/:publicationId', publicationController.enablePublication);
+router.get('/getPublication/:publicationId', publicationController.getPublication);
 module.exports = router;
