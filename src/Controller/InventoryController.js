@@ -106,7 +106,8 @@ async function getVehicle(req, res) {
         await vehicle.findOne({
             where: { vehicleId: req.params.vehicleId },
             attributes: [
-                'vehiclePlate', //
+                'vehicleId',
+                'vehiclePlate', 
                 'vehicleBrand',
                 'vehicleLine',
                 'vehicleYear',
