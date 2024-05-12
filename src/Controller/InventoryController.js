@@ -101,6 +101,44 @@ async function listVehicles(req, res) {
     }
 }//listar vehiculos
 
+async function getVehicle(req, res) {
+    try {
+        await vehicle.findOne({
+            where: { vehicleId: req.params.vehicleId },
+            attributes: [
+                'vehiclePlate', //
+                'vehicleBrand',
+                'vehicleLine',
+                'vehicleYear',
+                'vehicleTrasmision',
+                'vehicleBuyPrice',
+                'vehicleSellPrice',
+                'vehicleState',
+                'cityId',
+                'personId',
+                [Sequelize.literal(`to_char("buyDate", 'YYYY-MM-DD')`), 'buyDate'],
+                [Sequelize.literal(`to_char("sellDate", 'YYYY-MM-DD')`), 'sellDate'],
+                'vehicleCC',
+                'vehicleColor',
+                'vehicleSoat',
+                'vehicleTecno',
+                'vehicleDescription',
+                'vehicleType'
+            ]
+        }).then(function (data) {
+            return res.status(200).json({
+                data: data
+            });
+        }).catch(error => {
+            return res.status(400).json({
+                error: error
+            });
+        });
+    } catch (e) {
+        console.log(e);
+    }
+}//getVehicle
+
 async function updateVehicle(req, res) {
     try {
         await vehicle.update({
@@ -272,5 +310,6 @@ module.exports = {
     disableVehicle,
     listVehiclesBySeller,
     listSellerByVehicle,
-    filterVehicles
+    filterVehicles,
+    getVehicle,
 }
