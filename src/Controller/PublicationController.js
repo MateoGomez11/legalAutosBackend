@@ -6,7 +6,6 @@ const person = require('../Model/Person');
 const{sequelize, Op} = require('sequelize');
 
 
-
 async function createPublication(req, res) {
     try {
         const findVehicle = await Vehicle.findOne({
@@ -207,6 +206,30 @@ async function enablePublication(req, res) {
     } catch (e) {
         console.log(e);
     }
+}
+
+    async function getPublication(req, res) {
+        try {
+            await publication.findOne({
+                where: {publicationId: req.params.publicationId},
+                attributes: [
+                    'publicationDate',
+                    'state',
+                    'price',
+                ]
+            }).then(function (data){
+                return res.status(200).json({
+                    data : data
+                });
+            }).catch(error => {
+                return res.status(400).json({
+                    error : error
+                });
+            });
+        } catch (e) {
+        console.log(e);
+    }
+
 }//Finaliza function
 
 module.exports = {
@@ -214,5 +237,6 @@ module.exports = {
     listPublication,
     updatePublication,
     disablePublication,
-    enablePublication
+    enablePublication,
+    getPublication
 }
