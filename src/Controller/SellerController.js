@@ -38,7 +38,7 @@ async function listSellers(req, res) {
             },
             attributes: [
                 'personId',
-                'personName',
+                'personName',   
                 'personLastName',
                 'personAge',
                 'personEmail',
@@ -70,12 +70,12 @@ async function updateSeller(req, res) {
             personEmail: req.body.personEmail,
             personAddress: req.body.personAddress,
             cityId: req.body.cityId,
-            wallet: req.body.wallet
+            wallet: req.body.wallet,
+            personPassword: req.params.personPassword,
             
         }, {
             where: {
                 personId: req.params.personId,
-                personPassword: req.params.personPassword,
                 personType: 'Seller'
             }
         });

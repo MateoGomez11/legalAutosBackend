@@ -43,7 +43,7 @@ person.init({
     },
     wallet: {
         type: DataTypes.INTEGER,
-        allowNull: false
+        allowNull: true
     }
 
 
