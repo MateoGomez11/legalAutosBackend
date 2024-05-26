@@ -1,9 +1,15 @@
 require('express');
+const bcrypt = require('bcrypt');
 const person = require('../Model/Person');
+const jwt = require('jsonwebtoken');
+
 
 //create seller
 async function createSeller(req, res) {
     try {
+
+        const hashPassword = await bcrypt.hash(req.body.personPassword, 10)
+
         await person.create({
             personId: req.body.personId,
             personName: req.body.personName,
@@ -11,7 +17,7 @@ async function createSeller(req, res) {
             personAge: req.body.personAge,
             personEmail: req.body.personEmail,
             personAddress: req.body.personAddress,
-            personPassword: req.body.personPassword,
+            personPassword: hashPassword,
             cityId: req.body.cityId,
             wallet: req.body.wallet,
             personType: 'Seller'    
@@ -26,6 +32,35 @@ async function createSeller(req, res) {
         })
     }
     catch (e) {
+        console.log(e);
+    }
+}
+
+const jwtPassword = 'qwe987gfd'
+
+// Login Seller
+async function loginSeller(req,res){
+
+    try{
+    const sellerData= await person.findOne({where:{personId:req.body.personId}})
+    
+    if(!sellerData)
+        return res.status(401).json({message: 'user not found'})
+
+    const validPassword = await bcrypt.compare(req.body.personPassword, sellerData.personPassword)
+    if(!validPassword)
+        return res.status(401).json({message: 'invalid password'})
+
+    const token = jwt .sign(
+        {personId: sellerData.personId, personType: sellerData.personType},
+        jwtPassword,
+        {expiresIn: '1h'}
+    )
+
+    return res.status(200).json({message: token})
+    
+    }
+    catch (e){
         console.log(e);
     }
 }
@@ -206,7 +241,6 @@ async function addFundsSeller(req, res) {
     }
 }
 
-
 module.exports = {
     createSeller,
     listSellers,
@@ -214,5 +248,6 @@ module.exports = {
     changeSellerPassword,
     disableSeller,
     enableSeller,
-    addFundsSeller
+    addFundsSeller,
+    loginSeller
 }
