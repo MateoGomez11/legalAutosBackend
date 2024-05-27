@@ -2,6 +2,7 @@ const jwt = require('jsonwebtoken');
 
 const { jwtPassword } = require('../config/config');
 
+
 function verifyToken(req, res, next) {
     const token = req.headers['authorization'];
 
@@ -16,6 +17,9 @@ function verifyToken(req, res, next) {
 
     jwt.verify(tokenParts[1], jwtPassword, (err, decoded) => {
         if (err) {
+            if (err.name === 'TokenExpiredError') {
+                return res.status(401).json({ message: 'Token has expired' });
+            }
             return res.status(500).json({ message: 'Failed to authenticate token' });
         }
 

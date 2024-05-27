@@ -58,7 +58,6 @@ async function loginBuyer(req, res) {
     catch (e) {
         console.log(e);
     }
-
 }
 
 async function listBuyers(req, res) {
