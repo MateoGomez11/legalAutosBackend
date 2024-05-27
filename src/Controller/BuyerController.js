@@ -1,9 +1,13 @@
 require('express');
+const bcrypt = require('bcrypt');
+const jwt = require('jsonwebtoken');
 const person = require('../Model/Person');
+const { jwtPassword } = require('../config/config');
 
 
 async function createBuyer(req, res) {
     try {
+        const hashPassword = await bcrypt.hash(req.body.personPassword, 10);
         await person.create({
             personId: req.body.personId,
             personName: req.body.personName,
@@ -11,7 +15,7 @@ async function createBuyer(req, res) {
             personAge: req.body.personAge,
             personEmail: req.body.personEmail,
             personAddress: req.body.personAddress,
-            personPassword: req.body.personPassword,
+            personPassword: hashPassword,
             cityId: req.body.cityId,
             wallet: 0,
             personType: 'Buyer'
@@ -24,6 +28,32 @@ async function createBuyer(req, res) {
                 error: error
             });
         })
+    }
+    catch (e) {
+        console.log(e);
+    }
+}
+
+async function loginBuyer(req, res) {
+    try {
+        const buyerData = await person.findOne({ where: { personId: req.body.personId } })
+        console.log(buyerData)
+        if (!buyerData) {
+            return res.status(401).json({ message: 'Buyer not found' })
+        }
+
+        const validPassword = await bcrypt.compare(req.body.personPassword, buyerData.personPassword)
+        if (!validPassword) {
+            return res.status(401).json({ message: 'Invalid password' })
+        }
+        console.log(buyerData)
+        const token = jwt.sign(
+            {personId : buyerData.personId, personType: buyerData.personType},
+            jwtPassword,
+            { expiresIn: '1h' }
+        )
+
+        return res.status(200).json({ token })
     }
     catch (e) {
         console.log(e);
@@ -63,7 +93,7 @@ async function listBuyers(req, res) {
 async function getBuyer(req, res) {
     try {
         await person.findOne({
-            where: {personId: req.params.personId},
+            where: { personId: req.params.personId },
             attributes: [
                 'personName',
                 'personLastName',
@@ -100,7 +130,7 @@ async function updateBuyer(req, res) {
         }, {
             where: {
                 personId: req.params.personId,
-                 
+
                 personType: 'Buyer'
             }
         });
@@ -244,5 +274,6 @@ module.exports = {
     disableBuyer,
     enableBuyer,
     addFundsBuyer,
-    getBuyer
+    getBuyer,
+    loginBuyer
 }

@@ -4,6 +4,7 @@ const express = require('express');
 const app = express();
 const port = process.env.PORT || 1338;
 const cors = require('cors');
+const bodyParser = require('body-parser');
 
 // routers 
 const buyerRouter = require ('./Router/BuyerRouter');
@@ -14,6 +15,7 @@ const membershipRouter = require('./Router/MembershipRouter.js');
 const cityRouter = require('./Router/cityRouter.js');
 const departmentRouter = require('./Router/departmentRouter.js');
 
+app.use(bodyParser.json());
 app.use(express.json());
 app.use(express.urlencoded({ extended: false}));
 

@@ -9,6 +9,6 @@ router.put('/changesellerpassword/:personId/:personPassword', sellerController.c
 router.put('/disableseller/:personId', sellerController.disableSeller);
 router.put('/enableseller/:personId', sellerController.enableSeller);
 router.put('/addFundsSeller/:personId/:personPassword', sellerController.addFundsSeller);
-
+router.post('/loginSeller', sellerController.loginSeller);
 
 module.exports = router;
