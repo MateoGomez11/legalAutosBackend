@@ -2,14 +2,14 @@ require('express');
 const bcrypt = require('bcrypt');
 const person = require('../Model/Person');
 const jwt = require('jsonwebtoken');
+const { jwtPassword } = require('../config/config');
+
 
 
 //create seller
 async function createSeller(req, res) {
     try {
-
         const hashPassword = await bcrypt.hash(req.body.personPassword, 10)
-
         await person.create({
             personId: req.body.personId,
             personName: req.body.personName,
@@ -20,7 +20,7 @@ async function createSeller(req, res) {
             personPassword: hashPassword,
             cityId: req.body.cityId,
             wallet: req.body.wallet,
-            personType: 'Seller'    
+            personType: 'Seller'
         }).then(function (data) {
             return res.status(200).json({
                 data: data
@@ -36,31 +36,29 @@ async function createSeller(req, res) {
     }
 }
 
-const jwtPassword = 'qwe987gfd'
-
 // Login Seller
-async function loginSeller(req,res){
+async function loginSeller(req, res) {
 
-    try{
-    const sellerData= await person.findOne({where:{personId:req.body.personId}})
-    
-    if(!sellerData)
-        return res.status(401).json({message: 'user not found'})
+    try {
+        const sellerData = await person.findOne({ where: { personId: req.body.personId } })
 
-    const validPassword = await bcrypt.compare(req.body.personPassword, sellerData.personPassword)
-    if(!validPassword)
-        return res.status(401).json({message: 'invalid password'})
+        if (!sellerData)
+            return res.status(401).json({ message: 'user not found' })
 
-    const token = jwt .sign(
-        {personId: sellerData.personId, personType: sellerData.personType},
-        jwtPassword,
-        {expiresIn: '1h'}
-    )
+        const validPassword = await bcrypt.compare(req.body.personPassword, sellerData.personPassword)
+        if (!validPassword)
+            return res.status(401).json({ message: 'invalid password' })
 
-    return res.status(200).json({message: token})
-    
+        const token = jwt.sign(
+            { personId: sellerData.personId, personType: sellerData.personType },
+            jwtPassword,
+            { expiresIn: '1h' }
+        )
+
+        return res.status(200).json({ message: token })
+
     }
-    catch (e){
+    catch (e) {
         console.log(e);
     }
 }
@@ -105,8 +103,7 @@ async function updateSeller(req, res) {
             personEmail: req.body.personEmail,
             personAddress: req.body.personAddress,
             cityId: req.body.cityId,
-            wallet: req.body.wallet,
-            personPassword: req.params.personPassword,
+            wallet: req.body.wallet
             
         }, {
             where: {
