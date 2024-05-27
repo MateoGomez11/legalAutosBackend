@@ -71,7 +71,7 @@ async function listSellers(req, res) {
             },
             attributes: [
                 'personId',
-                'personName',
+                'personName',   
                 'personLastName',
                 'personAge',
                 'personEmail',
@@ -104,11 +104,10 @@ async function updateSeller(req, res) {
             personAddress: req.body.personAddress,
             cityId: req.body.cityId,
             wallet: req.body.wallet
-
+            
         }, {
             where: {
                 personId: req.params.personId,
-                personPassword: req.params.personPassword,
                 personType: 'Seller'
             }
         });
